@@ -11,7 +11,19 @@ require('model/functions.fn.php');
 			PROCESS
 ********************************/
 
-if (isset($_POST) && !empty($_POST)) {
+// Verification infos du formulaire non vides
+if (isset($_POST['email']) && !empty($_POST['email']) && isset($_POST['password']) && !empty($_POST['password'])) {
+
+	// Récupération des infos du formulaire
+	$email = $_POST['email'];
+	$password = $_POST['password'];
+
+	if (userConnection($db, $email, $password)) {
+		header('Location: dashboard.php');
+	}
+	else {
+		$error = "Mauvais identifiants";
+	}
 	
 	/*userConnection
 		return :
@@ -21,9 +33,7 @@ if (isset($_POST) && !empty($_POST)) {
 		$email -> 			field value : email
 		$password -> 		field value : password
 	*/
-	userConnection($db, 'git@initiation.com', 'password');
 	
-	header('Location: dashboard.php');
 }
 
 /******************************** 
